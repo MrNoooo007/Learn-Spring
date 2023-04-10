@@ -1,4 +1,12 @@
 # Learn-Spring
+# What is Spring Boot?
+- You know, Spring Boot is a project of the Spring platform or Spring ecosystem. It is a way that aims at helping developers get started with Spring framework with minimum effort, easier and more convenient - as development with pure Spring framework is well known as boilerplate with lots of XML configuration and dependency mess.
+   Spring Boot makes it easy to create stand-alone, production-grade Spring-based applications. So developers can save time and increase productivity by using Spring Boot.
+
+# Key Features of Spring Boot
+- Create stand-alone Spring applications with embedded server
+- Automatic configuration of Spring and 3rd party libraries
+- Furthermore, Spring Boot provides production-ready features such as metrics, health checks and externalized configuration - so developer could easily monitor their apps with ease.
 
 # Connect Mysql to Springboot 
 
