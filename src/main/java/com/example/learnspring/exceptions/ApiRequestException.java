@@ -1,5 +1,8 @@
 package com.example.learnspring.exceptions;
 
+import com.example.learnspring.response.ResponseObject;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;

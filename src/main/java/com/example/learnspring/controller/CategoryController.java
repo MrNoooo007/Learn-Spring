@@ -72,15 +72,16 @@ public class CategoryController {
     @DeleteMapping("/{categoryId}")
     public ResponseEntity<ResponseObject> delete(@PathVariable Integer categoryId) {
         try {
+            categoryService.get(categoryId);
             categoryService.delete(categoryId);
 
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(
+            return ResponseEntity.status(HttpStatus.OK).body(
               new ResponseObject("No content", "Deleted category ID : " + categoryId, null)
             );
         }
         catch (NoSuchElementException noSuchElementException) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("NOT FOUND", "Category not found", null)
+                    new ResponseObject("Not found", "Category not found", null)
             );
         }
     }
