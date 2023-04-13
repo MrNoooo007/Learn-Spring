@@ -17,21 +17,16 @@ public class ApiRequestException extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         Map<String, Object> responseBody = new LinkedHashMap<>();
         Map<String, String> detailError = new LinkedHashMap<>();
+        List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
 
         responseBody.put("timestamp", new Date());
         responseBody.put("status", status);
-
-        List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
-        List<String> listErrors = new ArrayList<>();
-
-//        System.out.println("Field Error: " + fieldErrors);
-//        System.out.println("List Error: " + listErrors);
 
         for(FieldError fieldError : fieldErrors) {
             String errorMessage = fieldError.getDefaultMessage();
             detailError.put(fieldError.getField(), errorMessage);
         }
-        responseBody.put("Errors: ", detailError);
+        responseBody.put("errors: ", detailError);
 
         return new ResponseEntity<>(responseBody, headers, status);
     }

@@ -18,10 +18,28 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
-    @GetMapping
-    public ResponseEntity<ResponseObject> index() {
+//    @GetMapping
+//    public ResponseEntity<ResponseObject> index() {
+//        return ResponseEntity.status(HttpStatus.OK).body(
+//                new ResponseObject("OK", "show data", categoryService.getAll())
+//        );
+//    }
+
+    @GetMapping("/{offset}/{pageSize}")
+    public ResponseEntity<ResponseObject> index(@PathVariable int offset, @PathVariable int pageSize) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("OK", "show data", categoryService.getAll())
+                new ResponseObject("OK", "show data", categoryService.getAllWithPaginate(offset,pageSize))
+        );
+    }
+
+    @GetMapping
+    public ResponseEntity<ResponseObject> paginate(
+            @RequestParam(defaultValue = "0") int offSet,
+            @RequestParam(defaultValue = "5") int pageSize,
+            @RequestParam(defaultValue = "name") String sortBy)
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("OK", "show data", categoryService.getAllWithPaginateAndSort(offSet,pageSize,sortBy))
         );
     }
 
@@ -34,7 +52,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{categoryId}")
-    public ResponseEntity<ResponseObject> update(@RequestBody Category category, @PathVariable Integer categoryId) {
+    public ResponseEntity<ResponseObject> update(@RequestBody @Valid Category category, @PathVariable Integer categoryId) {
         try {
             Category categoryExisted = categoryService.get(categoryId);
 
@@ -57,7 +75,7 @@ public class CategoryController {
             categoryService.delete(categoryId);
 
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(
-              new ResponseObject("No content", "Deteled category ID : " + categoryId, null)
+              new ResponseObject("No content", "Deleted category ID : " + categoryId, null)
             );
         }
         catch (NoSuchElementException noSuchElementException) {

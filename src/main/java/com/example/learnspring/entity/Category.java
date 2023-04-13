@@ -22,6 +22,6 @@ public class Category {
 
     @NotNull(message = "name can not null")
     @NotBlank(message = "name cant not be blank")
-    @Length(max = 10)
+    @Length(max = 20)
     private String name;
 }
