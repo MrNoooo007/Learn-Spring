@@ -57,6 +57,7 @@ public class CategoryController {
             Category categoryExisted = categoryService.get(categoryId);
 
             categoryExisted.setName(category.getName());
+            categoryService.save(categoryExisted);
 
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("OK", "updated", categoryExisted)
