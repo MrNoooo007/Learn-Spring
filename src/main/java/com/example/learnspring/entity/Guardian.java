@@ -4,26 +4,22 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Builder
-public class Category {
+public class Guardian {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @NotNull(message = "name can not null")
-    @NotBlank(message = "name cant not be blank")
-    @Length(max = 20)
     private String name;
+    private String email;
+    private String mobile;
 }
