@@ -1,5 +1,6 @@
 package com.example.learnspring.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,10 +17,11 @@ public class CourseMaterial {
 
     private String url;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(
             name = "course_id",
             referencedColumnName = "courseId"
     )
+    @JsonBackReference
     private Course course;
 }

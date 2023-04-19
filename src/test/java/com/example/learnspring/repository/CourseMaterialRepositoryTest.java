@@ -4,6 +4,7 @@ import com.example.learnspring.entity.Course;
 import com.example.learnspring.entity.CourseMaterial;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
