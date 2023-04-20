@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -32,5 +33,19 @@ public class ApiRequestException extends ResponseEntityExceptionHandler {
         responseBody.put("errors: ", detailError);
 
         return new ResponseEntity<>(responseBody, headers, status);
+    }
+
+    @ExceptionHandler({ ConstraintViolationException.class })
+    public ResponseEntity<Object> handleConstraintViolation(
+            HttpHeaders headers,
+            ConstraintViolationException ex, WebRequest request) {
+        List<String> errors = new ArrayList<String>();
+        for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
+            errors.add(violation.getRootBeanClass().getName() + " " +
+                    violation.getPropertyPath() + ": " + violation.getMessage());
+        }
+        return ResponseEntity.ok().body(
+                new ResponseObject(ex.getLocalizedMessage(), "errorssss" , errors)
+        );
     }
 }
