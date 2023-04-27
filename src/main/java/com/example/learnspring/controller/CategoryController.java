@@ -98,9 +98,9 @@ public class CategoryController {
 //        );
 //    }
 
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<ResponseObject> duplicateEmailException(HttpServletRequest req, DataIntegrityViolationException e) {
-        return exceptionInfoHandler.getErrorInfoResponseEntity(req, e, EXCEPTION_DUPLICATE_EMAIL, HttpStatus.CONFLICT);
-    }
+//    @ExceptionHandler(DataIntegrityViolationException.class)
+//    public ResponseEntity<ResponseObject> duplicateEmailException(HttpServletRequest req, DataIntegrityViolationException e) {
+//        return exceptionInfoHandler.getErrorInfoResponseEntity(req, e, EXCEPTION_DUPLICATE_EMAIL, HttpStatus.CONFLICT);
+//    }
 
 }
