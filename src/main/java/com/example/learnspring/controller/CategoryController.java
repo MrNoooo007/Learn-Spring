@@ -4,6 +4,7 @@ import com.example.learnspring.entity.Category;
 import com.example.learnspring.response.ResponseObject;
 import com.example.learnspring.service.CategoryService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -48,10 +49,18 @@ public class CategoryController {
 
     @PostMapping
     public ResponseEntity<ResponseObject> store(@RequestBody @Valid Category category) {
-        categoryService.save(category);
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                new ResponseObject("OK", "inserted !!!", category)
-        );
+        try {
+            categoryService.save(category);
+            return ResponseEntity.status(HttpStatus.CREATED).body(
+                    new ResponseObject("OK", "inserted !!!", category)
+            );
+        }
+        catch (DataIntegrityViolationException exception) {
+            if(exception.getCause() instanceof ConstraintViolationException) {
+                throw new DataIntegrityViolationException("this is unique", exception.getRootCause().getMessage());
+            }
+            throw exception;
+        }
     }
 
     @PutMapping("/{categoryId}")
