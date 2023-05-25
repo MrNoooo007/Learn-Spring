@@ -12,7 +12,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -49,6 +48,18 @@ public class ApiRequestException extends ResponseEntityExceptionHandler {
         }
         return ResponseEntity.ok().body(
                 new ResponseObject(ex.getLocalizedMessage(), "errorssss" , errors)
+        );
+    }
+
+//    Handle unique custom error message
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request) {
+        String errorMessage = "An error occurred while processing your request.";
+        if(ex.getRootCause().getMessage().contains("Duplicate")) {
+            errorMessage = "The record already exists.";
+        }
+        return ResponseEntity.badRequest().body(
+            new ResponseObject("Errors", HttpStatus.INTERNAL_SERVER_ERROR.toString(), errorMessage)
         );
     }
 //
